@@ -4,18 +4,18 @@ import pygame
 
 def move_player(player_rect, walls, move_step):
     key_input = pygame.key.get_pressed()   
-    if not (key_input[pygame.K_a] and key_input[pygame.K_d]):
-        if key_input[pygame.K_a]:
+    if not ((key_input[pygame.K_a] or key_input[pygame.K_LEFT]) and (key_input[pygame.K_d] or key_input[pygame.K_RIGHT])):
+        if key_input[pygame.K_a] or key_input[pygame.K_LEFT]:
             player_rect.move_ip(-move_step, 0)
             fix_wall_hits(player_rect, walls, "L")
-        if key_input[pygame.K_d]:
+        elif key_input[pygame.K_d] or key_input[pygame.K_RIGHT]:
             player_rect.move_ip(move_step, 0)
             fix_wall_hits(player_rect, walls, "R")
-    if not (key_input[pygame.K_w] and key_input[pygame.K_s]):
-        if key_input[pygame.K_w]:
+    if not ((key_input[pygame.K_w] or key_input[pygame.K_UP]) and (key_input[pygame.K_s] or key_input[pygame.K_DOWN])):
+        if key_input[pygame.K_w] or key_input[pygame.K_UP]:
             player_rect.move_ip(0, -move_step)
             fix_wall_hits(player_rect, walls, "U")
-        if key_input[pygame.K_s]:
+        if key_input[pygame.K_s] or key_input[pygame.K_DOWN]:
             player_rect.move_ip(0, move_step)
             fix_wall_hits(player_rect, walls, "B")
 

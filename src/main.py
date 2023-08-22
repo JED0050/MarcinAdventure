@@ -14,10 +14,12 @@ fpsclock=pygame.time.Clock()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-player_speed = 5
+player_speed = 2
+player = Player(100, 100)
+
 file_name = "level_1.csv"
 tile_map = TileMap(file_name)
-player = Player(100, 100)
+#tile_map.draw_walls(screen)
 
 run = True
 while run:
@@ -41,7 +43,12 @@ while run:
 
     for object in tile_map.objects:
         if pygame.Rect.colliderect(player.rect, object.rect):
-            run = False
+            if object.type == "finish" and tile_map.objectiveFinished():
+                run = False
+                break
+            elif object.type == "speed_boost":
+                player_speed += 2
+                tile_map.objects.remove(object)
 
     pygame.display.update()
     fpsclock.tick(FPS)
